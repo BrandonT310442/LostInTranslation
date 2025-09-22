@@ -42,8 +42,11 @@ public class LanguageCodeConverter {
             iterator.next(); // skip the first line
             while (iterator.hasNext()) {
                 String line = iterator.next();
-                languageCodeToLanguage.put(line.split(" ")[1], line.split(" ")[0]);
-                languageToLanguageCode.put(line.split(" ")[0], line.split(" ")[1]);
+                String[] parts = line.split("\t");
+                if (parts.length >= 2) {
+                    languageCodeToLanguage.put(parts[1], parts[0]);
+                    languageToLanguageCode.put(parts[0], parts[1]);
+                }
             }
 
         } catch (IOException | URISyntaxException ex) {

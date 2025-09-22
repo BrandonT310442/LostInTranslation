@@ -42,8 +42,9 @@ public class CountryCodeConverter {
                 String line = iterator.next();
                 String[] parts = line.split("\t");
                 // TODO Task B: use parts to populate the instance variables
-                countryCodeToCountry.put(parts[1], parts[0]);
-                countryToCountryCode.put(parts[0], parts[1]);
+                // Use 3-letter code (parts[2]) - lowercase to match JSON format
+                countryCodeToCountry.put(parts[2].toLowerCase(), parts[0]);
+                countryToCountryCode.put(parts[0], parts[2].toLowerCase());
             }
         }
         catch (IOException | URISyntaxException ex) {

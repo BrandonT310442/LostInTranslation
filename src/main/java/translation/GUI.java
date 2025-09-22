@@ -15,8 +15,8 @@ public class GUI {
         SwingUtilities.invokeLater(() -> {
             JPanel countryPanel = new JPanel();
             JTextField countryField = new JTextField(10);
-            countryField.setText("can");
-            countryField.setEditable(false); // we only support the "can" country code for now
+            countryField.setText("Canada");
+            countryField.setEditable(true);
             countryPanel.add(new JLabel("Country:"));
             countryPanel.add(countryField);
 
@@ -39,14 +39,29 @@ public class GUI {
             submit.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String language = languageField.getText();
-                    String country = countryField.getText();
+                    String languageInput = languageField.getText();
+                    String countryInput = countryField.getText();
+                    
+                    CountryCodeConverter countryConverter = new CountryCodeConverter();
+                    LanguageCodeConverter languageConverter = new LanguageCodeConverter();
+                    
+                    // Handle country input - could be name or code
+                    String countryCode = countryConverter.fromCountry(countryInput);
+                    if (countryCode == null) {
+                        // If not found as country name, try using input directly as code
+                        countryCode = countryInput.toLowerCase();
+                    }
+                    
+                    // Handle language input - could be name or code
+                    String languageCode = languageConverter.fromLanguage(languageInput);
+                    if (languageCode == null) {
+                        // If not found as language name, try using input directly as code
+                        languageCode = languageInput.toLowerCase();
+                    }
+                    
+                    Translator translator = new JSONTranslator();
 
-                    // for now, just using our simple translator, but
-                    // we'll need to use the real JSON version later.
-                    Translator translator = new CanadaTranslator();
-
-                    String result = translator.translate(country, language);
+                    String result = translator.translate(countryCode, languageCode);
                     if (result == null) {
                         result = "no translation found!";
                     }
