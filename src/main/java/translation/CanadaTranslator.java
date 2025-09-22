@@ -15,6 +15,8 @@ public class CanadaTranslator implements Translator {
 
     public static final String CANADA = "can";
     public static final String FRENCH = "fr";
+    public static final String SPANISH = "es";
+    
     /**
      * Return the language code for all languages whose translations are
      * available for translating "can".
@@ -23,7 +25,7 @@ public class CanadaTranslator implements Translator {
      */
     @Override
     public List<String> getLanguageCodes() {
-        return new ArrayList<>(List.of("de", "en", "fr", "zh"));
+        return new ArrayList<>(List.of("de", "en", "fr", "es", "zh"));
     }
 
     /**
@@ -34,7 +36,7 @@ public class CanadaTranslator implements Translator {
      */
     @Override
     public List<String> getCountryCodes() {
-        return new ArrayList<>(List.of(CANADA, FRENCH));
+        return new ArrayList<>(List.of(CANADA, FRENCH, SPANISH));
 
     }
 
@@ -61,6 +63,9 @@ public class CanadaTranslator implements Translator {
         }
         else if ("fr".equals(languageCode)) {
             return "Canada";
+        }
+        else if ("es".equals(languageCode)) {
+            return "Canadá";
         }
         else {
             return null;
